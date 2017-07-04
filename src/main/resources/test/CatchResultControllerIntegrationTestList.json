@@ -1,0 +1,30 @@
+[
+  {
+    "date": "2017.06.03 01:02:03:999",
+    "locationInfo": {
+      "lat": 1.1,
+      "lon": 2.2,
+      "address": "address"
+    },
+    "result": {
+      "weight": 1.01,
+      "fishes": [
+        {
+          "first": "Bream",
+          "second": 9
+        },
+        {
+          "first": "Roach",
+          "second": 18
+        }
+      ]
+    },
+    "image": null,
+    "tackle": [
+      "feeder"
+    ],
+    "ipAddress": "127.0.0.1",
+    "phone": "322-223",
+    "login": "fisher"
+  }
+]

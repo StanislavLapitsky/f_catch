@@ -11,7 +11,7 @@ import java.util.*
  * @author stanislav.lapitsky created 7/4/2017.
  */
 data class CatchDto (
-    @get:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd") @Field val date: Date = Date(),
+    @get:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss:SSS") @Field val date: Date = Date(),
     @Field val locationInfo: LocationInfo = LocationInfo(0.0,0.0, null),
     @Field val result: CatchResult = CatchResult(0.0, null),
     @Field val image: Array<Byte>? = null,
