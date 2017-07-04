@@ -1,6 +1,7 @@
 package com.fishing.catch.entity
 
 import com.fasterxml.jackson.annotation.JsonFormat
+import com.fishing.catch.dto.CatchDto
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
@@ -21,3 +22,17 @@ data class CatchEntity (
         @Field val phone: String? = null,
         @Field val login: String? = null
 )
+{
+    object Mapper {
+        fun from(dto: CatchDto) =
+                CatchEntity(date = dto.date,
+                        locationInfo = dto.locationInfo,
+                        result = dto.result,
+                        image = dto.image,
+                        tackle = dto.tackle,
+                        ipAddress = dto.ipAddress,
+                        phone = dto.phone,
+                        login = dto.login
+                )
+    }
+}

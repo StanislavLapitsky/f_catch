@@ -1,5 +1,6 @@
 package com.fishing.catch.service
 
+import com.fishing.catch.dto.CatchDto
 import com.fishing.catch.entity.CatchEntity
 import com.fishing.catch.repository.CatchRepository
 import org.slf4j.LoggerFactory
@@ -16,14 +17,13 @@ class CatchResultServiceImpl: CatchResultService {
     @Autowired
     lateinit var catchRepository: CatchRepository
 
-    override fun add(catchEntity: CatchEntity) {
-        logger.debug("saving {}", catchEntity)
-
-        catchRepository.save(catchEntity)
+    override fun add(catch: CatchDto) {
+        logger.debug("saving {}", catch)
+        catchRepository.save(CatchEntity.Mapper.from(catch))
     }
 
-    override fun list(): List<CatchEntity> {
+    override fun list(): List<CatchDto> {
         logger.debug("getting list")
-        return catchRepository.findAll()
+        return catchRepository.findAll().map { m -> CatchDto.Mapper.from(m) }
     }
 }
