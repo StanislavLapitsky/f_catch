@@ -1,4 +1,4 @@
-package com.fishing.catch
+package com.fishing.catch.controller
 
 import com.fishing.catch.dto.CatchDto
 import com.fishing.catch.entity.CatchEntity
@@ -27,7 +27,7 @@ import kotlin.test.assertTrue
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
                ,properties = arrayOf("spring.data.mongodb.inMemory:true","spring.data.mongodb.port:0"))
-class CatchResultControllerIntegrationTest {
+class CatchSearchControllerIntegrationTest {
 	@Autowired
 	lateinit var catchRepository: CatchRepository
 
@@ -45,7 +45,7 @@ class CatchResultControllerIntegrationTest {
 	val newCatch = CatchEntity(
 			id = null,
 			date = SimpleDateFormat("yyyy.MM.dd HH:mm:ss:SSS Z").parse("2017.06.03 01:02:03:999 UTC"),
-			locationInfo = LocationInfo(1.1,2.2, "address"),
+			locationInfo = LocationInfo(53.879581, 27.572910, "address"),
 			result = CatchResult(1.01, listOf(Pair("Bream", 9), Pair("Roach", 18))),
 			image = null,
 			ipAddress = "127.0.0.1",
@@ -61,24 +61,26 @@ class CatchResultControllerIntegrationTest {
 		catchRepository.save(newCatch)
 	}
 
-    @After
-    @Throws(Exception::class)
-    fun after() {
-        catchRepository.delete(newCatch)
-    }
-
-    @Test
+	@After
 	@Throws(Exception::class)
-	fun testList() {
+	fun after() {
+		catchRepository.delete(newCatch)
+	}
+
+	@Test
+	@Throws(Exception::class)
+	fun testSearch() {
+		val startDate=SimpleDateFormat("yyyy.MM.dd HH:mm:ss:SSS Z").parse("2017.06.01 01:02:03:999 UTC").time
+		val endDate=SimpleDateFormat("yyyy.MM.dd HH:mm:ss:SSS Z").parse("2017.06.09 01:02:03:999 UTC").time
 		val response = template.exchange(
-				base + contextPath + "/catch/list",
+				"$base$contextPath/search/home?lat=53.879581&lon=27.572910&startDate=$startDate&endDate=$endDate",
 				HttpMethod.GET,
 				null,
 				object : ParameterizedTypeReference<String>() {
 				})
 
 		assertTrue { response.body.isNotEmpty()  }
-        val expectedJson = IOUtils.toString(this.javaClass.getResourceAsStream("/test/CatchResultControllerIntegrationTestList.json"),"UTF-8");
+        val expectedJson = IOUtils.toString(this.javaClass.getResourceAsStream("/test/CatchSearchControllerIntegrationTestList.json"),"UTF-8");
 		JSONAssert.assertEquals(expectedJson, response.body, false)
 	}
 
@@ -87,6 +89,5 @@ class CatchResultControllerIntegrationTest {
         val results = catchRepository.findAll()
         assertEquals(0,results.size)
     }
-
 
 }

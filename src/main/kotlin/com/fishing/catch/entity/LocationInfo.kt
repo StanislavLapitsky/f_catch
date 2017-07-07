@@ -1,7 +1,5 @@
 package com.fishing.catch.entity
 
-import com.fasterxml.jackson.annotation.JsonCreator
-
 /**
  * @author stanislav.lapitsky created 6/29/2017.
  */

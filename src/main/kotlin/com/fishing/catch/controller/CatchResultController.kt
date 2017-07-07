@@ -1,11 +1,8 @@
 package com.fishing.catch.controller
 
 import com.fishing.catch.dto.CatchDto
-import com.fishing.catch.entity.CatchEntity
 import com.fishing.catch.service.CatchResultService
 import io.swagger.annotations.Api
-import io.swagger.annotations.ApiImplicitParam
-import io.swagger.annotations.ApiImplicitParams
 import io.swagger.annotations.ApiOperation
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

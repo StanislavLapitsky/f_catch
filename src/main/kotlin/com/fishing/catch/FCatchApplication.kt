@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-import org.springframework.context.annotation.ComponentScan
 
 @SpringBootApplication(exclude = arrayOf(DataSourceAutoConfiguration::class,
                                          MongoRepositoriesAutoConfiguration::class))
