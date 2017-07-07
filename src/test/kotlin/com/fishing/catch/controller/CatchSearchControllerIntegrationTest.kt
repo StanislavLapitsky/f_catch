@@ -20,6 +20,8 @@ import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpMethod
 import org.springframework.test.context.junit4.SpringRunner
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -44,7 +46,7 @@ class CatchSearchControllerIntegrationTest {
 
 	val newCatch = CatchEntity(
 			id = null,
-			date = SimpleDateFormat("yyyy.MM.dd HH:mm:ss:SSS Z").parse("2017.06.03 01:02:03:999 UTC"),
+			date = LocalDateTime.of(2017, 6, 3, 1, 2, 3).toEpochSecond(ZoneOffset.UTC),
 			locationInfo = LocationInfo(53.879581, 27.572910, "address"),
 			result = CatchResult(1.01, listOf(Pair("Bream", 9), Pair("Roach", 18))),
 			image = null,
@@ -70,8 +72,8 @@ class CatchSearchControllerIntegrationTest {
 	@Test
 	@Throws(Exception::class)
 	fun testSearch() {
-		val startDate=SimpleDateFormat("yyyy.MM.dd HH:mm:ss:SSS Z").parse("2017.06.01 01:02:03:999 UTC").time
-		val endDate=SimpleDateFormat("yyyy.MM.dd HH:mm:ss:SSS Z").parse("2017.06.09 01:02:03:999 UTC").time
+		val startDate=LocalDateTime.of(2017, 6, 1, 1, 2, 3).toEpochSecond(ZoneOffset.UTC)
+		val endDate=LocalDateTime.of(2017, 6, 9, 1, 2, 3).toEpochSecond(ZoneOffset.UTC)
 		val response = template.exchange(
 				"$base$contextPath/search/home?lat=53.879581&lon=27.572910&startDate=$startDate&endDate=$endDate",
 				HttpMethod.GET,

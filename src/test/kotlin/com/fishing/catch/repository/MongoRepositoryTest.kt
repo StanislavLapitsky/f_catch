@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Import
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.junit4.SpringRunner
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 import kotlin.test.assertEquals
 
@@ -32,7 +34,7 @@ class MongoRepositoryTest {
         assertEquals(0,results.size)
         val newCatch = CatchEntity(
                 id = null,
-                date= Date(),
+                date= LocalDateTime.now().toEpochSecond(ZoneOffset.UTC),
                 locationInfo = LocationInfo(0.0,0.0, "address"),
                 result = CatchResult(0.01, listOf(Pair("Bream", 9), Pair("Roach", 18))),
                 image = null,

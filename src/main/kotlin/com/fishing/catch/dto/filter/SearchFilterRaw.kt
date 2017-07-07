@@ -8,6 +8,7 @@ import java.time.ZoneOffset
 /**
  * @author stanislav.lapitsky created 7/6/2017.
  */
+const val DEFAULT_INTERVAL_DAYS:Long = 14
 data class SearchFilterRaw(
         @Range(max = 90, min = -90)
         @Field var lat:Double? = null,
@@ -19,13 +20,13 @@ data class SearchFilterRaw(
 ) {
     fun validFilter():SearchFilter {
         val startDate = if (this.startDate!=null)
-                             LocalDateTime.ofEpochSecond(this.startDate!!,0, ZoneOffset.UTC)
+                             this.startDate!!
                         else
-                             LocalDateTime.now().minusDays(14)
-        val endDate = if (this.startDate!=null)
-                             LocalDateTime.ofEpochSecond(this.startDate!!,0, ZoneOffset.UTC)
+                             LocalDateTime.now().minusDays(DEFAULT_INTERVAL_DAYS).toEpochSecond(ZoneOffset.UTC)
+        val endDate = if (this.endDate!=null)
+                             this.endDate!!
                         else
-                             LocalDateTime.now()
+                             LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
 
         val latTop:Double = if (this.lat!=null) this.lat!! + 1 else 1.0
         val latBottom:Double = if (this.lat!=null) this.lat!! - 1 else -1.0

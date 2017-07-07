@@ -5,6 +5,8 @@ import com.fishing.catch.dto.CatchDto
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 
 /**
@@ -13,7 +15,7 @@ import java.util.*
 @Document(collection = "catch-result")
 data class CatchEntity (
         @Id val id: String? = null,
-        @get:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss:SSS") @Field val date: Date = Date(),
+        @Field val date: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC),
         @Field val locationInfo: LocationInfo = LocationInfo(0.0,0.0, null),
         @Field val result: CatchResult = CatchResult(0.0, null),
         @Field val image: Array<Byte>? = null,

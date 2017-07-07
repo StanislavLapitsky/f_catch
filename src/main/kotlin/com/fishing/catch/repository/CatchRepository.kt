@@ -10,5 +10,10 @@ import org.springframework.data.mongodb.repository.Query
  */
 interface CatchRepository:MongoRepository<CatchEntity, String> {
     @Query("{'locationInfo.lat':{'\$lt':?0}, '\$and':[{'locationInfo.lat':{'\$gt':?1}}]}")
-    fun searchByFilter(latTop:Double, latBottom:Double):List<CatchEntity>
+    fun searchByFilter(latTop:Double,
+                       latBottom:Double,
+                       lonTop:Double,
+                       lonBottom:Double,
+                       startDate:Long,
+                       endDate:Long):List<CatchEntity>
 }

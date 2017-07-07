@@ -19,7 +19,7 @@ class CatchSearchServiceImpl:CatchSearchService {
 
     override fun search(filter: SearchFilter): List<CatchDto> {
         return catchRepository
-                .searchByFilter(filter.latTop, filter.latBottom)
+                .searchByFilter(filter.latTop, filter.latBottom, filter.lonTop, filter.lonBottom, filter.startDate, filter.endDate)
                 .map { item -> CatchDto.Mapper.from(item)}
     }
 }

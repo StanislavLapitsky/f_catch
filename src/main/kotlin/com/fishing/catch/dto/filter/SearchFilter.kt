@@ -10,7 +10,7 @@ data class SearchFilter(
         val latBottom:Double,
         val lonTop:Double,
         val lonBottom:Double,
-        val startDate: LocalDateTime,
-        val endDate: LocalDateTime
+        val startDate: Long,
+        val endDate: Long
 ) {
 }
