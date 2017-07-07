@@ -71,7 +71,7 @@ class CatchSearchControllerIntegrationTest {
 
 	@Test
 	@Throws(Exception::class)
-	fun testSearch() {
+	fun testSearchOk() {
 		val startDate=LocalDateTime.of(2017, 6, 1, 1, 2, 3).toEpochSecond(ZoneOffset.UTC)
 		val endDate=LocalDateTime.of(2017, 6, 9, 1, 2, 3).toEpochSecond(ZoneOffset.UTC)
 		val response = template.exchange(
@@ -84,6 +84,54 @@ class CatchSearchControllerIntegrationTest {
 		assertTrue { response.body.isNotEmpty()  }
         val expectedJson = IOUtils.toString(this.javaClass.getResourceAsStream("/test/CatchSearchControllerIntegrationTestList.json"),"UTF-8");
 		JSONAssert.assertEquals(expectedJson, response.body, false)
+	}
+
+	@Test
+	@Throws(Exception::class)
+	fun testSearchDateOfRange() {
+		val startDate=LocalDateTime.of(2017, 5, 1, 1, 2, 3).toEpochSecond(ZoneOffset.UTC)
+		val endDate=LocalDateTime.of(2017, 5, 9, 1, 2, 3).toEpochSecond(ZoneOffset.UTC)
+		val response = template.exchange(
+				"$base$contextPath/search/home?lat=53.879581&lon=27.572910&startDate=$startDate&endDate=$endDate",
+				HttpMethod.GET,
+				null,
+				object : ParameterizedTypeReference<String>() {
+				})
+
+		assertTrue { response.body.isNotEmpty()  }
+		JSONAssert.assertEquals("[]", response.body, false)
+	}
+
+	@Test
+	@Throws(Exception::class)
+	fun testSearchLatOfRange() {
+        val startDate=LocalDateTime.of(2017, 6, 1, 1, 2, 3).toEpochSecond(ZoneOffset.UTC)
+        val endDate=LocalDateTime.of(2017, 6, 9, 1, 2, 3).toEpochSecond(ZoneOffset.UTC)
+		val response = template.exchange(
+				"$base$contextPath/search/home?lat=13.879581&lon=27.572910&startDate=$startDate&endDate=$endDate",
+				HttpMethod.GET,
+				null,
+				object : ParameterizedTypeReference<String>() {
+				})
+
+		assertTrue { response.body.isNotEmpty()  }
+		JSONAssert.assertEquals("[]", response.body, false)
+	}
+
+	@Test
+	@Throws(Exception::class)
+	fun testSearchLonOfRange() {
+        val startDate=LocalDateTime.of(2017, 6, 1, 1, 2, 3).toEpochSecond(ZoneOffset.UTC)
+        val endDate=LocalDateTime.of(2017, 6, 9, 1, 2, 3).toEpochSecond(ZoneOffset.UTC)
+		val response = template.exchange(
+				"$base$contextPath/search/home?lat=53.879581&lon=17.572910&startDate=$startDate&endDate=$endDate",
+				HttpMethod.GET,
+				null,
+				object : ParameterizedTypeReference<String>() {
+				})
+
+		assertTrue { response.body.isNotEmpty()  }
+		JSONAssert.assertEquals("[]", response.body, false)
 	}
 
 //    @Test
